@@ -1,0 +1,50 @@
+/* Ubica este archivo en la carpeta assets/ */
+:root {
+  --bg-grad-1: #0f172a;
+  --bg-grad-2: #07203c;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --accent: #00b4d8;
+  --muted: #98a0b3;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+  color: #eef2ff;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Contenedor principal */
+.app-container {
+  padding: 24px;
+}
+
+/* Título */
+.app-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  margin-bottom: 8px;
+}
+
+/* Tarjeta de controles */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(3, 7, 18, 0.5);
+}
+
+/* Footer */
+.footer {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Gráfico: fondo claro para resaltar */
+#map-graph .js-plotly-plot {
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
