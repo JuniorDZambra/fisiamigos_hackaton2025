@@ -1,4 +1,4 @@
-/* Ubica este archivo en la carpeta assets/ */
+
 :root {
   --bg-grad-1: #0f172a;
   --bg-grad-2: #07203c;
@@ -14,12 +14,12 @@ body {
   min-height: 100vh;
 }
 
-/* Contenedor principal */
+
 .app-container {
   padding: 24px;
 }
 
-/* Título */
+
 .app-title {
   font-size: 2.4rem;
   font-weight: 700;
@@ -29,20 +29,20 @@ body {
   margin-bottom: 8px;
 }
 
-/* Tarjeta de controles */
+
 .card {
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(3, 7, 18, 0.5);
 }
 
-/* Footer */
+
 .footer {
   color: var(--muted);
   font-size: 0.9rem;
   text-align: center;
 }
 
-/* Gráfico: fondo claro para resaltar */
+
 #map-graph .js-plotly-plot {
   border-radius: 10px;
   overflow: hidden;
