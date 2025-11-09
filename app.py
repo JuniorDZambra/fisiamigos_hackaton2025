@@ -6,7 +6,7 @@ import plotly.express as px
 import json
 import sys
 
-# --- Carga de datos ---
+
 try:
     gdf_provincias = gpd.read_file("Provincias.geojson")
 except Exception as e:
@@ -19,11 +19,11 @@ except Exception as e:
     print(f"Error leyendo el CSV: {e}", file=sys.stderr)
     df_indices = None
 
-# --- Usamos __name__ ---
+
 app = Dash(__name__, external_stylesheets=[dbc.themes.MINTY])
 
 if gdf_provincias is None or df_indices is None:
-    # App de emergencia que muestra el error en pantalla
+  
     app.layout = dbc.Container(
         [
             html.H1("Índices del futuro", className="app-title"),
@@ -33,7 +33,7 @@ if gdf_provincias is None or df_indices is None:
     )
 
 else:
-    # Merge: asegúrate que las columnas coincidan con tus datos
+    
     try:
         mapa_con_datos = gdf_provincias.merge(
             df_indices,
@@ -45,23 +45,23 @@ else:
         print(f"Error haciendo merge: {e}", file=sys.stderr)
         mapa_con_datos = gdf_provincias.copy()
 
-    # Asegurar CRSs
+    
     try:
         mapa_con_datos = mapa_con_datos.to_crs(epsg=4326)
     except Exception:
         pass
 
-    # Generar geojson usable por Plotly
+    
     geojson = json.loads(mapa_con_datos.to_json())
 
-    # Determinar columnas numéricas (posibles índices)
+   
     numeric_cols = df_indices.select_dtypes(include="number").columns.tolist()
     
     # Si no hay columnas numéricas detectadas, caer en NDVI_Mean si existe
     if not numeric_cols and "NDVI_Mean" in df_indices.columns:
         numeric_cols = ["NDVI_Mean"]
 
-    # --- INICIO DE LA SECCIÓN DE CONTROLES (ACTUALIZADA) ---
+    
     controls = dbc.Card(
         [
             # El dropdown
@@ -79,7 +79,7 @@ else:
             ),
             html.Hr(),
 
-            # --- Explicación del NDVI ---
+           
             dbc.Accordion(
                 dbc.AccordionItem(
                     [
@@ -97,14 +97,14 @@ else:
                 ),
                 start_collapsed=True, # Empieza cerrado
             ),
-            # --- FIN DE LA SECCIÓN DE EXPLICACIÓN ---
+            
 
             html.Hr(), # Un separador más
             html.P("Interactúa con el mapa: acercar/alejar y pasar el mouse sobre una provincia."),
         ],
         body=True,
     )
-    # --- FIN DE LA SECCIÓN DE CONTROLES ---
+    
 
     app.layout = dbc.Container(
         [
@@ -144,7 +144,7 @@ else:
         Input("col-dropdown", "value"),
     )
     def update_map(column):
-        # Si no hay columna válida, devolver figura vacía
+       
         if column is None or column not in mapa_con_datos.columns:
             fig = px.choropleth_mapbox(
                 mapa_con_datos,
@@ -159,7 +159,7 @@ else:
             fig.update_layout(margin={"r":0,"t":30,"l":0,"b":0})
             return fig
 
-        # Dibuja el mapa con la columna seleccionada
+        
         fig = px.choropleth_mapbox(
             mapa_con_datos,
             geojson=geojson,
@@ -173,10 +173,9 @@ else:
             opacity=0.75,
             color_continuous_scale="Viridis",
             
-            # --- ¡AQUÍ ESTÁ LA MODIFICACIÓN! ---
-            labels={"provincia": "Provincia", column: "indice promedio"},
-            # --- FIN DE LA MODIFICACIÓN ---
             
+            labels={"provincia": "Provincia", column: "indice promedio"},
+         
             title=f"{column} por Provincia"
         )
 
@@ -186,6 +185,6 @@ else:
         )
         return fig
 
-# Ejecutar la app
+
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=8050)
