@@ -1,4 +1,7 @@
-geopandas
-nbformat
+dash
+dash-bootstrap-components
 pandas
+geopandas
 plotly
+gunicorn
+python-dotenv
