@@ -1,0 +1,4 @@
+geopandas
+nbformat
+pandas
+plotly
